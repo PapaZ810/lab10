@@ -179,12 +179,7 @@ public class BinarySearchTree <K extends Comparable<? super K>> implements Searc
 	
 	public K remove(K key) 
 	{
-		BSTElement<K, String> left;
-		BSTElement<K, String> right;
-		BSTElement<K, String> tmp;
-		BSTElement<K, String> succ = null;
-		succ.setKey(null);
-		Iterator<K> itr = iterator();
+		BSTElement<K, String> tmp = root;
 		
 		if(isEmpty())
 			return null;
@@ -192,49 +187,49 @@ public class BinarySearchTree <K extends Comparable<? super K>> implements Searc
 			return null;
 		else
 		{
-			tmp = removeHelper(key, root);
+			tmp = removeHelper(key, tmp);
 			
 			if(tmp.getLeft() != null && tmp.getRight() != null)
 			{
-				while(itr.hasNext())
-				{
-					if(itr.next().compareTo(succ.getKey()) > 0)
-					{
-						succ.setKey(itr.next());
-					}
-				}
+				tmp = minimum(tmp.getRight());
 				
-				tmp = succ;
 				return tmp.getKey();
 			}
-			else if(tmp.getLeft() != null)
+			else 
 			{
-				
+				if(tmp.getLeft() != null)
+				{
+					tmp = tmp.getLeft();
+				}
+				else
+					tmp = tmp.getRight();
 			}
-			else if(tmp.getRight() != null)
-			{
-				
-			}
-			else
-				key = null;
+			
 		}
-		return key;
+		return tmp.getKey();
 	}
 	
 	private BSTElement<K, String> removeHelper(K key, BSTElement<K, String> node)
 	{
-		Iterator<K> itr = iterator();
-		
-		while(itr.hasNext())
+		if(node.getLeft() == null && node.getRight() == null)
 		{
-			if(itr.next() == key)
-			{
-				return node;
-			}
-			
+			return node;
 		}
+		else if(key.compareTo(node.getKey()) > 0)
+		{
+			node = removeHelper(key, node.getRight());
+		}
+		else
+			node = removeHelper(key, node.getLeft());
 		
-		return null;
+		return node;
+	}
+	
+	private BSTElement<K, String> minimum(BSTElement<K, String> node)
+	{
+		if(node.getLeft() == null)
+			return node;
+		return minimum(node.getLeft());
 	}
 	
 	public int size() 
