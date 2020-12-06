@@ -37,6 +37,7 @@ public class BSTExample {
 		list.add(38);
 		list.add(85);
 		list.add(95);
+		list.add(69);
 		
 		// iterate through the list and insert the
 		// elements into the tree
@@ -49,12 +50,6 @@ public class BSTExample {
 		
 		// Now perform some operations on the tree
 		// i.e. isEmpty(), size(), iterator(), contains(), remove(), 
-		
-		System.out.println(tree.contains(20));
-		System.out.println(tree.remove(20));
-		System.out.println(tree.contains(20));
-		
-		System.out.println("-------");
 		
 		System.out.println(tree.getLargest());
 		System.out.println(tree.getSmallest());
@@ -71,6 +66,12 @@ public class BSTExample {
 		System.out.println("-------");
 		
 		System.out.println(tree.size());
+		
+		System.out.println("-------");
+		
+		System.out.println(tree.contains(5));
+		System.out.println(tree.remove(5));
+		System.out.println(tree.contains(5));
 	
 		// visualize the tree
 		bridges.setDataStructure(tree.getRoot());
