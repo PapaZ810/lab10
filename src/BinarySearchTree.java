@@ -179,66 +179,56 @@ public class BinarySearchTree <K extends Comparable<? super K>> implements Searc
 	
 	public K remove(K key) 
 	{
-		BSTElement<K, String> tmp = root;
+		key = removeHelper(key, root).getKey();
+		
+		return key;
+	}
+	
+	private BSTElement<K, String> removeHelper(K key, BSTElement<K, String> node)
+	{
 		BSTElement<K, String> left;
 		BSTElement<K, String> right;
-		BSTElement<K, String> succ = new BSTElement<K, String>();
+		BSTElement<K, String> succ;
 		
-		if(isEmpty())
+		if(node == null)
 			return null;
 		else if(!contains(key))
 			return null;
 		else
 		{
-			if(key.compareTo(tmp.getKey()) > 0)
+			if(key.compareTo(node.getKey()) < 0)
 			{
-				left = removeHelper(key, tmp.getLeft());
+				left = removeHelper(key, node.getLeft());
 				
-				tmp.setLeft(left);
+				node.setLeft(left);
 			}
-			else if(key.compareTo(tmp.getKey()) < 0)
+			else if(key.compareTo(node.getKey()) > 0)
 			{
-				right = removeHelper(key, tmp.getRight());
+				right = removeHelper(key, node.getRight());
 				
-				tmp.setRight(right);
+				node.setRight(right);
 			}
-			else if(tmp.getLeft() != null && tmp.getRight() != null)
+			else if(node.getLeft() != null && node.getRight() != null)
 			{
-				succ = minimum(tmp.getRight());
+				succ = minimum(node.getRight());
 				
-				succ.setKey(tmp.getKey());
+				node.setValue(succ.getValue());
 				
-				right = removeHelper(succ.getKey(), tmp.getRight());
+				right = removeHelper(succ.getKey(), node.getRight());
 				
-				succ.setRight(right);
+				node.setRight(right);
 			}
 			else 
 			{
-				if(succ.getLeft() != null)
+				if(node.getLeft() != null)
 				{
-					succ = succ.getLeft();
+					node = node.getLeft();
 				}
 				else
-					succ = succ.getRight();
+					node = node.getRight();
 			}
 			
 		}
-		return succ.getKey();
-	}
-	
-	private BSTElement<K, String> removeHelper(K key, BSTElement<K, String> node)
-	{
-		if(node.getLeft() == null && node.getRight() == null)
-		{
-			return node;
-		}
-		else if(key.compareTo(node.getKey()) > 0)
-		{
-			node = removeHelper(key, node.getRight());
-		}
-		else
-			node = removeHelper(key, node.getLeft());
-		
 		return node;
 	}
 	
