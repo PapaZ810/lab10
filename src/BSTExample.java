@@ -68,9 +68,7 @@ public class BSTExample {
 		
 		System.out.println("-------");
 		
-		System.out.println(tree.contains(5));
-		System.out.println(tree.remove(5));
-		System.out.println(tree.contains(5));
+		System.out.println(tree.remove(20));
 	
 		// visualize the tree
 		bridges.setDataStructure(tree.getRoot());
