@@ -213,6 +213,7 @@ public class BinarySearchTree <K extends Comparable<? super K>> implements Searc
 				succ = minimum(node.getRight());
 				
 				node.setKey(succ.getKey());
+				node.setLabel(""+succ.getKey());
 				
 				right = removeHelper(succ.getKey(), node.getRight());
 				
